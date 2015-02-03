@@ -1,0 +1,140 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+<style>
+    .video_back{
+        width:760px;
+        height: 400px;
+        background-color: #333;
+        position: relative;
+
+    }
+    #top_bar{
+        width:760px;
+        height: 50px;
+        position: absolute;
+        background-color: #999;
+        z-index: 10;
+    }
+    #bottom_bar{
+        width:760px;
+        height: 50px;
+        top:350px;
+        position: absolute;
+        background-color: #999;
+        z-index: 10;
+    }
+    #ytplayer{
+        z-index: 8;
+    }
+    #main{
+        position: relative;
+        margin: 0 auto;
+        width: 800px;
+    }
+    .chip1{
+        position: absolute;
+        top:0px;
+        left:0px;
+    }
+    .chip2{
+        position: absolute;
+        top:0px;
+        left:50px;
+    }
+    .chip3{
+        position: absolute;
+        top:0px;
+        left:100px;
+    }
+    #chips_animations{
+       width: 200px;
+height: 100%;
+border: 1px solid rgba(119, 119, 119, 0.17);
+position: absolute;
+z-index: 12;
+top: 0px;
+    }
+</style>
+</head>
+<body>
+    <div id="main">
+    <div id="top_bar">
+    </div>
+
+
+    <div id="ytplayer" class="video_back">
+    </div>
+    <div id="chips_animations">
+
+    </div>
+    <div id="bottom_bar">
+
+    </div>
+
+    </div>
+</body>
+
+
+<script>
+  var status_app_animation, chip, time_anim=0;
+  var song_anim = {
+    "2":"2","3":"3","5":"1"
+  }
+
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/player_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  var player;
+  function onYouTubePlayerAPIReady() {
+    player = new YT.Player('ytplayer', {
+
+      videoId: 'KWZGAExj-es',
+      playerVars: { 'autoplay': 0, 'controls': 0 },
+      events:{'onStateChange':'playerEnded'}
+
+    });
+  }
+  function playerEnded(state){
+    if(state.data == YT.PlayerState.PLAYING){
+       // initAnim();
+    }
+    if(state.data == YT.PlayerState.ENDED){
+    }
+    if(state.data == YT.PlayerState.PAUSED){
+
+    }
+
+  }
+function initAnim(){
+    status_app_animation = window.setInterval(function(){
+        cae1();
+        time_anim++;
+    },1000);
+}
+$(document).on('keyup', function(event){
+    console.log(event.keyCode);
+});
+
+  function cae1(){
+
+    var d = new Date();
+    var n = d.getMinutes()+""+d.getSeconds()+""+d.getMilliseconds();
+    if (song_anim[time_anim]!=null){
+        chip = song_anim[time_anim];
+
+
+        $("#chips_animations").append('<div id="'+n+'" class="chip'+chip+'"><img src="btn.png"></div>')
+
+        $("#"+n).animate({top:"+=400"}, 2000, function(){
+               this.remove();
+        });
+    }
+  }
+
+  initAnim();
+</script>
+</html>
