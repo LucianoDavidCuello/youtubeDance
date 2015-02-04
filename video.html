@@ -48,13 +48,22 @@
         top:0px;
         left:100px;
     }
+    .chip4{
+        position: absolute;
+        top:0px;
+        left:150px;
+    }
     #chips_animations{
        width: 200px;
-height: 100%;
-border: 1px solid rgba(119, 119, 119, 0.17);
-position: absolute;
-z-index: 12;
-top: 0px;
+      height: 100%;
+      border: 1px solid rgba(119, 119, 119, 0.17);
+      position: absolute;
+      z-index: 12;
+      top: 0px;
+    }
+    .btn_chip{
+      width: 40px;
+      height: 40px;
     }
 </style>
 </head>
@@ -64,7 +73,7 @@ top: 0px;
     </div>
 
 
-    <div id="ytplayer" class="video_back">
+    <div id="ytplayer" class="video_back" >
     </div>
     <div id="chips_animations">
 
@@ -113,7 +122,7 @@ function initAnim(){
     status_app_animation = window.setInterval(function(){
         cae1();
         time_anim++;
-    },1000);
+    },500);
 }
 $(document).on('keyup', function(event){
     console.log(event.keyCode);
@@ -127,7 +136,7 @@ $(document).on('keyup', function(event){
         chip = song_anim[time_anim];
 
 
-        $("#chips_animations").append('<div id="'+n+'" class="chip'+chip+'"><img src="btn.png"></div>')
+        $("#chips_animations").append('<div id="'+n+'" class="chip'+chip+'"><img class="btn_chip" src="img/btn.png"></div>')
 
         $("#"+n).animate({top:"+=400"}, 2000, function(){
                this.remove();
