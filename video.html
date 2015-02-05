@@ -65,6 +65,9 @@
       width: 40px;
       height: 40px;
     }
+    #code{
+      width: 100%;
+    }
 </style>
 </head>
 <body>
@@ -83,14 +86,22 @@
     </div>
 
     </div>
+    <h2 id="status">Esperando play</h2>
+        <textarea id="code">
+
+    </textarea>
 </body>
 
 
 <script>
+
   var status_app_animation, chip, time_anim=0;
-  var song_anim = {
-    "2":"2","3":"3","5":"1"
-  }
+  var time_animation_clock = 2000, time_clock = 500;
+  var time_ini_anim = time_animation_clock / time_clock;
+  var timeMakeSong;
+  var status = 0 ;
+  var song_anim = {14:1,15:1,18:1,19:1,21:1,22:1,25:1,26:1,29:1,29:1,32:1,33:1,36:1,37:1,40:1,41:1,43:1,44:1,47:1,48:1,51:1,52:1,54:1,55:1,57:1,58:1,61:1,62:1,64:1,65:1};
+  var song_ed ="";
 
   var tag = document.createElement('script');
   tag.src = "https://www.youtube.com/player_api";
@@ -109,7 +120,8 @@
   }
   function playerEnded(state){
     if(state.data == YT.PlayerState.PLAYING){
-       // initAnim();
+        initAnim();
+       //makeSong();
     }
     if(state.data == YT.PlayerState.ENDED){
     }
@@ -122,28 +134,48 @@ function initAnim(){
     status_app_animation = window.setInterval(function(){
         cae1();
         time_anim++;
-    },500);
+        console.log("animacion",time_anim);
+    },time_clock);
 }
 $(document).on('keyup', function(event){
     console.log(event.keyCode);
+      if(event.keyCode == 65){
+      //var key= "\""+(time_anim-time_ini_anim)+"\":\"1\"";
+      //song_anim.push((time_anim-time_ini_anim) + ':'+ 1);
+      if (song_ed.length>0){song_ed+=",";}
+      song_ed+=time_anim-time_ini_anim+":1";
+
+      //console.log(key);
+      //song_anim[time_anim-time_ini_anim]="1";
+      $("#code").text(JSON.stringify("{"+song_ed+"}"));
+    }
 });
+
+
+function makeSong(){
+  $("#status").text("Grabando");
+  status = 1;
+  timeMakeSong = window.setInterval(function(){
+    time_anim++;
+  },time_clock);
+}
 
   function cae1(){
 
     var d = new Date();
     var n = d.getMinutes()+""+d.getSeconds()+""+d.getMilliseconds();
     if (song_anim[time_anim]!=null){
+        console.log(song_anim[time_anim]);
         chip = song_anim[time_anim];
-
-
         $("#chips_animations").append('<div id="'+n+'" class="chip'+chip+'"><img class="btn_chip" src="img/btn.png"></div>')
 
-        $("#"+n).animate({top:"+=400"}, 2000, function(){
+        $("#"+n).animate({top:"+=400"}, time_animation_clock, function(){
                this.remove();
         });
     }
   }
 
-  initAnim();
+  //initAnim();
+
 </script>
 </html>
