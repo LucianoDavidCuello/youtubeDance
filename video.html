@@ -96,7 +96,7 @@
 <script>
 
   var status_app_animation, chip, time_anim=0;
-  var time_animation_clock = 2000, time_clock = 500;
+  var time_animation_clock = 2000, time_clock = 1000;
   var time_ini_anim = time_animation_clock / time_clock;
   var timeMakeSong;
   var status = 0 ;
@@ -162,12 +162,10 @@ function makeSong(){
 
   function cae1(){
 
-    var d = new Date();
-    var n = d.getMinutes()+""+d.getSeconds()+""+d.getMilliseconds();
-    if (song_anim[time_anim]!=null){
-        console.log(song_anim[time_anim]);
+    var n = "asd"+Math.random();
+    if (song_anim[time_anim-time_ini_anim]!=null){
         chip = song_anim[time_anim];
-        $("#chips_animations").append('<div id="'+n+'" class="chip'+chip+'"><img class="btn_chip" src="img/btn.png"></div>')
+        $("#chips_animations").append('<div id="'+n+'" class="chip'+chip+'"><img class="btn_chip" src="img/btn.png"></div>');
 
         $("#"+n).animate({top:"+=400"}, time_animation_clock, function(){
                this.remove();
